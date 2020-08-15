@@ -1,15 +1,18 @@
 #include<stdio.h>
-int fib(int a, int b){
+int fib(int a, int b,int limit){
 	int c= a+b;
-	if(c>100000000){
+	if(c>limit){
 		return c;
 	}else{
 		printf("%d\n",c);
-		return fib(b,c);
+		return fib(b,c,limit);
 	}
 
 }
 int main(){
-	printf("%d",fib(0,1));
+	int limit;
+	printf("Enter the limit of the fibonacci sequence\n");
+	scanf("%d",&limit);
+	printf("%d\n",fib(0,1,limit));
 	return 0;
 }

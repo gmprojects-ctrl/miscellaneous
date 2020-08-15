@@ -13,6 +13,6 @@ int main(){
 	int limit;
 	printf("Enter the limit of the fibonacci sequence\n");
 	scanf("%d",&limit);
-	printf("%d\n",fib(0,1,limit));
+	fib(0,1,limit);
 	return 0;
 }

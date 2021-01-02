@@ -1,0 +1,68 @@
+#!/bin/python
+#Note that 11=Jack, 12=Queen, 13= King
+#Libraries
+from random import randint
+from time import sleep
+#Functions
+def generate_deck():
+    deck=[]
+    for i in ["C","D","H","S"]:
+        deck.extend( [i+str(j) for j in range(1,14)] )  
+    return deck
+def put_card(hand,current_deck,turns):
+    for i in range (0,turns):
+        card_1=randint(0, len(current_deck)-1)
+        hand.append( current_deck[card_1])
+        del current_deck[card_1]
+def points(hand):
+    total=0
+    for i in hand:
+        if i[1:] in [ "11", "12", "13"]:
+            total+= 10
+        else:
+            total+=int(i[1:])
+    return total
+
+def game():
+    current_deck=generate_deck()
+    table=[]
+    player_hand=[]
+    put_card(table,current_deck,1)
+    put_card(player_hand,current_deck,2)
+    player_points=points(player_hand)
+    house_points=points(table)
+    print(table,"Table \t{}".format(house_points))
+    print(player_hand,"Hand \t Your points {}".format(player_points) )
+    while True :
+        decision=input("What do you want to do?\n h for hit\n s for stand \n")
+        if decision == "h" :
+            put_card(player_hand,current_deck,1)
+            player_points=points(player_hand)
+            print("New card is {} ".format(player_hand[len(player_hand)-1]))
+            print(table,"Table \t House Points {}".format(house_points))
+            print(player_hand,"Hand \t Your points {}".format(player_points))
+            if player_points > 21 :
+                print("You lose")
+                return 0
+            else:
+                pass
+        elif decision== "s" :
+            break
+        else:
+            print("Assumed stand ")
+            break
+    for i in range(0,4):
+        put_card(table,current_deck,1)
+        house_points=points(table)
+        print(table,"Table \t House Points {}".format(house_points))
+        print(player_hand,"Hand \t Your points {}".format(player_points))
+        print("\n")
+        if house_points>21:
+            print("Player  wins")
+            break
+        elif house_points > player_points :
+            print("House wins")
+            break
+        else:
+            sleep(1)
+game()

@@ -19,12 +19,16 @@ def points(hand):
     for i in hand:
         if i[1:] in [ "11", "12", "13"]:
             total+= 10
+        elif i[1:] == "1":
+            if total <= 10 :
+                total+= 10
+            else:
+                total += 1
         else:
             total+=int(i[1:])
     return total
 
-def game():
-    current_deck=generate_deck()
+def game(current_deck):
     table=[]
     player_hand=[]
     put_card(table,current_deck,1)
@@ -43,7 +47,7 @@ def game():
             print(player_hand,"Hand \t Your points {}".format(player_points))
             if player_points > 21 :
                 print("You lose")
-                return 0
+                return 1
             else:
                 pass
         elif decision== "s" :
@@ -59,10 +63,23 @@ def game():
         print("\n")
         if house_points>21:
             print("Player  wins")
-            break
+            return 0
         elif house_points > player_points :
             print("House wins")
-            break
+            return 1
         else:
             sleep(1)
-game()
+current_deck=generate_deck()
+money = 1000
+while len(current_deck) > 5 and money != 0:
+    print("Money left ${}".format(money))
+    bet=money
+    while bet >=  money:
+        bet= int(input("How much do you want to bet ? \n"))
+    money-=bet
+    state=game(current_deck)
+    if state == 0:
+        money+=(2*bet)
+    else:
+        pass
+

@@ -37,6 +37,9 @@ def game(current_deck):
     house_points=points(table)
     print(table,"Table \t{}".format(house_points))
     print(player_hand,"Hand \t Your points {}".format(player_points) )
+    if player_points == 21:
+        print("Player wins")
+        return 0
     while True :
         decision=input("What do you want to do?\n h for hit\n s for stand \n")
         if decision == "h" :
@@ -73,8 +76,8 @@ current_deck=generate_deck()
 money = 1000
 while len(current_deck) > 5 and money != 0:
     print("Money left ${}".format(money))
-    bet=money
-    while bet >=  money:
+    bet=2*money
+    while bet > money:
         bet= int(input("How much do you want to bet ? \n"))
     money-=bet
     state=game(current_deck)
@@ -82,4 +85,4 @@ while len(current_deck) > 5 and money != 0:
         money+=(2*bet)
     else:
         pass
-
+print("You lose")

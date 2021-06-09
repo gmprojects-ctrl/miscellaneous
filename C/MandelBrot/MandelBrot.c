@@ -2,7 +2,7 @@
 #include<math.h>
 #include "Complex.h"
 
-int maxIter =8000;
+int maxIter =80;
 
 
 int maxiteration(Complex z){
@@ -25,8 +25,8 @@ int main(){
 	double IEND=1;
 	double RSCALE= REND -RSTART;
 	double ISCALE= IEND -ISTART;
-	int DIMX = 3840;
-	int DIMY = 2160;
+	int DIMX = 1280;
+	int DIMY = 720;
 	FILE* image = fopen("image.ppm","wb");
 	FILE* diag = fopen("diag.txt","w");
 	fprintf(image,"P6\n%d %d\n255\n",DIMX,DIMY);

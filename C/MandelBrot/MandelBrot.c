@@ -7,15 +7,13 @@
 
 int maxIter =80;
 
-int maxiteration(Complex* z,Complex* start,int p){
+int maxiteration(Complex* z,Complex* start){
 	int Iter=0;
 	Complex result;
 	result.a=start->a;
 	result.b=start->b;
 	while(Iter < maxIter && cmodulus(&result) <= 2){
-		for(int i=1; i<p; i++){
-			result = cmultiply(&result,&result);
-		}
+		result = cmultiply(&result,&result);	
 		result = cadd(&result,z);
 		Iter +=1;
 	}
@@ -35,7 +33,7 @@ int RenderImage(double RSTART,double REND, double ISTART, double IEND, int DIMX,
 			Complex current;
 			current.a = RSTART +   (double)i * RSCALE/DIMX ;
 			current.b = ISTART + (double)j  * ISCALE/DIMY;
-			double maxCurrent = (double) maxiteration(&current,&start,power);
+			double maxCurrent = (double) maxiteration(&current,&start);
 			char colour = round( (maxCurrent/maxIter)*255) ;
 			unsigned char pixel[]={colour,colour,colour};
 			fwrite(pixel,1,3,image);

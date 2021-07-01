@@ -4,6 +4,13 @@ from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
 
+# Chekcking names
+if __name__ == "__main__":
+    exit("This file is not executable")
+else:
+    pass
+
+
 
 # Makes the fonts size proportional the the image
 def correctfontsize(imageheight):
@@ -11,7 +18,8 @@ def correctfontsize(imageheight):
     return size
 
 # Converts Images to memes
-def ImageConverter(name, text, tolerance, colour_1, colour_2, text_colour):
+def ImageConverter(name, text,new_name,tolerance=128, colour_1=(255,0,0), 
+                   colour_2=(0,0,0), text_colour=(255,255,255),output="../Output/"):
     with Image.open(name) as im:   # Opening the file as a Image Object
         pixelmap_original = im.load()
         image2 = Image.new(im.mode, im.size)
@@ -28,7 +36,7 @@ def ImageConverter(name, text, tolerance, colour_1, colour_2, text_colour):
                     pixelmap_new[i, j] = colour_2
 
         # Writes text on the image
-        font = ImageFont.truetype("../../fonts/impact.ttf",
+        font = ImageFont.truetype("../fonts/impact.ttf",
                                   correctfontsize(image2.size[1]))
         draw_obj = ImageDraw.Draw(image2)
         text_width = draw_obj.textlength(text, font)
@@ -37,13 +45,13 @@ def ImageConverter(name, text, tolerance, colour_1, colour_2, text_colour):
                       text,
                       fill=text_colour,
                       font=font)
-        image2.save("2" + name)
+        image2.save(output+new_name)
 
 
-name = "jc.jpg"
-red = (255, 0, 0)
-black = (0, 0, 0)
-white = (255, 255, 255)
-text = "*Socialism Intensifies"
-
-ImageConverter(name, text, "128", red, black, white)
+#name = "jc.jpg"
+#red = (255, 0, 0)
+#black = (0, 0, 0)
+#white = (255, 255, 255)
+#text = "*Socialism Intensifies"
+#
+#ImageConverter(name, text, "128", red, black, white)

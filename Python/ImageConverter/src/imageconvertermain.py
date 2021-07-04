@@ -12,10 +12,14 @@ else:
 
 
 
-# Makes the fonts size proportional the the image
-def correctfontsize(imageheight):
-    size = round((0.25 * imageheight / 8) * 6)
-    return size
+# Defines the correct font with ttf and relative to the image
+def correctfont(imagewidth,text,ttf):
+    size = round((0.25 * imagewidth / 8) * 6)
+    font = ImageFont.truetype(ttf,size)
+    while font.getsize_multiline(text)[0] > imagewidth:
+        size-=1
+        font=ImageFont.truetype(ttf,size)
+    return font
 
 # Converts Images to memes
 def ImageConverter(name, text,new_name,tolerance=128, colour_1=(255,0,0), 
@@ -36,10 +40,9 @@ def ImageConverter(name, text,new_name,tolerance=128, colour_1=(255,0,0),
                     pixelmap_new[i, j] = colour_2
 
         # Writes text on the image
-        font = ImageFont.truetype("../fonts/impact.ttf",
-                                  correctfontsize(image2.size[1]))
+        font = correctfont(image2.size[0],text,"../fonts/impact.ttf")
         draw_obj = ImageDraw.Draw(image2)
-        text_width = draw_obj.textlength(text, font)
+        text_width = font.getsize_multiline(text)[0]
         draw_obj.text((round(
             (image2.size[0] - text_width) / 2), round(image2.size[1] * 0.75)),
                       text,
@@ -48,10 +51,13 @@ def ImageConverter(name, text,new_name,tolerance=128, colour_1=(255,0,0),
         image2.save(output+new_name)
 
 
-#name = "jc.jpg"
+#name = "cr2.jpg"
 #red = (255, 0, 0)
+#blue=(0,0,255)
+#green=(0,255,0)
 #black = (0, 0, 0)
 #white = (255, 255, 255)
-#text = "*Socialism Intensifies"
+#text = "Sweet\nDreams"
 #
-#ImageConverter(name, text, "128", red, black, white)
+#ImageConverter(name, text,"maggie3.jpg", 128,green, blue, blue)
+#

@@ -24,10 +24,16 @@ else:
         mainjson = loadjson("main.json")[FOCUS]
         quotesjson = loadjson(mainjson["qtxt"])
         imglist=os.listdir(mainjson["imgsrc"])
-        img_file= imglist[randint(0,len(imglist)-1)]
-        print(img_file)
-        quote_index=str(randint(1,len(imglist)))
-        quote = quotesjson[quote_index]
-        imageconvertermain.ImageConverter(mainjson["imgsrc"]+img_file,quote,quote_index+img_file)
-        hashchecker.writehash("img.txt",quote_index+img_file)
-
+        TOTAL_COMBINATIONS= len(imglist)*len(quotesjson)
+        LIMITER=0
+        while LIMITER<=TOTAL_COMBINATIONS:
+            img_file= imglist[randint(0,len(imglist)-1)]
+            quote_index=str(randint(1,len(quotesjson)))
+            quote = quotesjson[quote_index]
+            image_name=mainjson['imgsrc']+img_file
+            if hashchecker.checkhash('img.txt',image_name) != True:
+                imageconvertermain.ImageConverter(image_name,quote,quote_index+img_file)
+                hashchecker.writehash('img.txt',image_name);
+                LIMITER+=1
+            else: 
+                pass

@@ -7,18 +7,20 @@ else:
     pass
 
 # Function definitons
-def checkhash(name, hash_item):
-    with open(name,"r") as f:
+def checkhash(file_name, item):
+    item_bytes = bytearray(item,"utf-8")
+    hash_item = hashlib.sha512(item_bytes).hexdigest()
+    with open(file_name,"r") as f:
         for line in f:
             if line.rstrip() == hash_item:
                 return True
     return False
 
-def writehash(name,item):
+def writehash(file_name,item):
     item_bytes = bytearray(item,"utf-8")
     hash_item = hashlib.sha512(item_bytes).hexdigest()
     try:
-        with open(name,"a") as f:
+        with open(file_name,"a") as f:
             f.write(hash_item+"\n")
     except FileNotFoundError:
         print("File not found")

@@ -17,7 +17,7 @@ class LorenzAttractor{
 			float z = OBJPOSITION.z+ time * ( OBJPOSITION.x * OBJPOSITION.y - CONSTS.z * OBJPOSITION.z);
 			OBJPOSITION={x,y,z};
 			storelist++;
-			if(storelist>1000){
+			if(storelist>256){
 				 poslist.erase(poslist.begin());
 				 storelist=0;
 			}
@@ -38,8 +38,8 @@ class LorenzAttractor{
 
 int main(){
 	// Define Screen Size
-	const int SCREENWIDTH = 800;
-	const int SCREENHEIGHT = 600;
+	const int SCREENWIDTH = 1280;
+	const int SCREENHEIGHT = 720;
 
 	// Initialise the Windo
 	
@@ -65,7 +65,7 @@ int main(){
 	LorenzAttractor LA(INITPOS,CONSTS);
 	// Set Fps
 	
-	SetTargetFPS(60);
+	SetTargetFPS(120);
 
 	// Main Loop
 	while(!WindowShouldClose()){
@@ -77,12 +77,11 @@ int main(){
 		//DrawGrid(10,1.0f);
 		for(int i=1; i< (int) LA.poslist.size();i++){
 			
-			DrawLine3D(LA.poslist[i-1],LA.poslist[i],BLUE);
+			DrawLine3D(LA.poslist[i-1],LA.poslist[i],PURPLE);
 		}
 		Vector3 Sphere_Centre=LA.generateposition(GetFrameTime()); 
 		DrawSphereWires(Sphere_Centre, 1.0f, 10, 10, WHITE);
 		DrawSphere(Sphere_Centre,1.0f,RED);
-		LA.printposition();
 		EndMode3D();
 		
 

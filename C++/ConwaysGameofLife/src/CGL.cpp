@@ -86,7 +86,7 @@ int main(){
 //				if(grid_1[i][j]==1)
 //				{
 //					DrawPixel(i,j,RED);
-//				
+//
 //				}
 //			}
 //		}

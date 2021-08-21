@@ -1,0 +1,41 @@
+#!/bin/sh
+#FILE_LIST=$(ls )
+
+## This is a script that organises my files in my wiki and creates a pathfor them automatically
+
+## This is a recursive function that goes through all the files and add them on the list
+
+
+
+recur_fn() {
+	for FILE in *; do
+		if [[ -d "$FILE" ]]; then
+			( cd "$FILE";recur_fn )
+		else
+			if [[ -f "$FILE" ]]; then
+				if [[ "${FILE##*.}" == 'md' ]] && ! [[ "$FILE" == 'full_index.md' ]] ; then
+					DIR="$(dirname $(readlink -f $FILE))"
+					NAME="$( head -1 $FILE)"
+					printf "[%s](%s/%s) \n"  "$NAME" "$DIR" "$FILE"
+					
+				fi
+			fi
+		fi
+	done
+	}
+
+if [ -e "full_index.md" ]; then
+	true 
+else
+	touch 'full_index.md'
+fi
+
+
+for FILE in *; do
+	if [ -d $FILE ]; then
+		recur_fn > 'full_index.md' 
+	fi
+
+done
+
+

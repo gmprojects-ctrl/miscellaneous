@@ -1,0 +1,6 @@
+#!/bin/sh
+
+if [[ $1 == "-p" ]]; then
+	FILENAME=$(date "+PN%R%D%S" | sed "s/\///g ; s/://g")  
+	echo $(date "+# Personal Note %A %T %D" ) > "$FILENAME.md"
+fi

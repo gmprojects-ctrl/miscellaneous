@@ -7,16 +7,23 @@
 
 
 
+
 recur_fn() {
 	for FILE in *; do
-		if [[ -d "$FILE" ]]; then
-			( cd "$FILE";recur_fn )
+		if [[ -d "$FILE" ]]; then # If the file is a directory then do this
+			printf "\n## [%s](%s)" "$FILE" "$(readlink -f $FILE)/$FILE.md" 1>> $1  # Create a Index File
+			printf "Creating Index File for folder %s\n" "$FILE"
+			( cd "$FILE"&& echo " " > "$FILE.md" && recur_fn "$FILE.md") 
+			# Goes into the directroy creates an empty index file then outputs STDOUT to the index file
+			#outputs STDOUT to index file
 		else
 			if [[ -f "$FILE" ]]; then
 				if [[ "${FILE##*.}" == 'md' ]] && ! [[ "$FILE" == 'full_index.md' ]] ; then
 					DIR="$(dirname $(readlink -f $FILE))"
 					NAME="$( head -1 $FILE)"
-					printf "[%s](%s/%s) \n"  "$NAME" "$DIR" "$FILE"
+					NAME="${NAME:1}"
+					printf "Creating entry for file %s\n" "$FILE"
+					printf "\n[%s](%s/%s)\n"  "$NAME" "$DIR" "$FILE" 1>> $1  # If md file then write it down (output on STDOUT
 					
 				fi
 			fi
@@ -25,17 +32,16 @@ recur_fn() {
 	}
 
 if [ -e "full_index.md" ]; then
-	true 
+	echo "Index already exists, preparing to rebuild"
+	echo " " > 'full_index.md' 
 else
 	touch 'full_index.md'
 fi
 
 
-for FILE in *; do
-	if [ -d $FILE ]; then
-		recur_fn > 'full_index.md' 
-	fi
+#printf "# Full Index of Wiki\n" > 'full_index.md'
 
-done
+recur_fn 'full_index.md'
 
-
+sed -i "1s/^/# $USER's Wiki\n/" 'full_index.md'
+echo "Finished Building Index"

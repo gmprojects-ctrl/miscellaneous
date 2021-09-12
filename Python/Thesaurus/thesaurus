@@ -1,0 +1,32 @@
+#!/bin/python3
+
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+OPTIONS = Options()
+OPTIONS.add_argument("--incognito")
+OPTIONS.add_argument("--headless")
+CHROME_DRIVER = "/usr/lib/chromium/chromedriver"
+
+DRIVER = webdriver.Chrome(options=OPTIONS,executable_path= CHROME_DRIVER)
+
+URL = "https://www.thesaurus.com/"
+
+#WORD = str(input("Please enter word\n"))
+WORD = "hello"
+
+
+URL = URL +"browse/"+WORD
+
+DRIVER.get(URL)
+
+meanings = DRIVER.find_element_by_id("meanings")
+
+element = meanings.find_elements_by_tag_name("li")
+
+for i in element:
+    print(i.text)
+
+
+
+
+DRIVER.quit()

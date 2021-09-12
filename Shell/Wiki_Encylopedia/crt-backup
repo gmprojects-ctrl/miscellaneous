@@ -1,0 +1,10 @@
+#!/bin/sh
+
+if [ -e "/home/$USER/.wikinotes" ]; then
+	source "/home/$USER/.wikinotes"
+	tar -czvf "$(date "+WikiBackUp%c" | sed -e "s/ //g;s/://g").tar.gz" -C "$(dirname $WIKI_SOURCE)" "$(basename $WIKI_SOURCE)"
+
+else
+	echo "File Not Found, creating file in .wikinotes "
+	touch ".wikinotes" && mv ".wikinotes" "/home/$USER/"
+fi

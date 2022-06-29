@@ -1,8 +1,15 @@
 # Miscellaneous
 Code that I've written for fun and are not part of any wider projects.
 
-I've organised everything based on language rather than anything else.
+Most code are abandonware, not functional. Some are functional but
+are _too small_ to be fully fledged projects.
 
+Evethough mostly abandoned, the code written in this repo could
+be used in later projects.
+
+I've organised everything based on language rather than anything else.
+**However note that this list is not exhaustive, and this repo is mainly
+code scrapbook that I add things that I can't work on anymore**
 ## List of Things
 
 ## ASM
@@ -40,6 +47,7 @@ I was testing out the Raylib library and created the following programmes.
 
 - An attempt to make a Thesaurus ~~(Which I might work on)~~
 
+- Text Generation through Stochastic Matrix
 ## Rust
 
 - Basic Fibonacci Programme
